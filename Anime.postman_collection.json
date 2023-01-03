@@ -1,0 +1,33 @@
+{
+	"info": {
+		"_postman_id": "8283f16f-f894-4388-863b-184ec0d66a02",
+		"name": "Anime",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Escola",
+			"item": [
+				{
+					"name": "Escola listar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/escolas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"escolas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
