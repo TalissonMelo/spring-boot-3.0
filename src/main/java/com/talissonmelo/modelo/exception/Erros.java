@@ -1,4 +1,4 @@
-package com.talissonmelo.controlador.exceptionHandler;
+package com.talissonmelo.modelo.exception;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -12,8 +12,8 @@ public class Erros {
 
 	private Integer status;
 	private OffsetDateTime timestamp;
-	private String msg;
-	private List<Mensagem> mensagens = new ArrayList<Mensagem>();
+	private String descricao;
+	private List<String> mensagens = new ArrayList<String>();
 
 	public Integer getStatus() {
 		return status;
@@ -31,19 +31,19 @@ public class Erros {
 		this.timestamp = timestamp;
 	}
 
-	public String getMsg() {
-		return msg;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setMsg(String msg) {
-		this.msg = msg;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
-	public List<Mensagem> getMensagens() {
+	public List<String> getMensagens() {
 		return mensagens;
 	}
 
-	public void setMensagens(List<Mensagem> mensagens) {
+	public void setMensagens(List<String> mensagens) {
 		this.mensagens = mensagens;
 	}
 }
