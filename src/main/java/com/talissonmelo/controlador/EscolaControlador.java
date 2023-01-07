@@ -1,17 +1,18 @@
 package com.talissonmelo.controlador;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.talissonmelo.modelo.Escola;
 import com.talissonmelo.servico.EscolaServico;
@@ -26,23 +27,27 @@ public class EscolaControlador {
 	private EscolaServico servico;
 
 	@GetMapping
-	public List<Escola> listar() {
-		return servico.listar();
+	public ResponseEntity<List<Escola>> listar() {
+		List<Escola> escolas = servico.listar();
+		return ResponseEntity.ok().body(escolas);
 	}
 
 	@GetMapping(value = "/{id}")
-	public Escola listarPorId(@PathVariable Long id) {
-		return servico.listarPorId(id);
+	public ResponseEntity<Escola> listarPorId(@PathVariable Long id) {
+		Escola escola = servico.listarPorId(id);
+		return ResponseEntity.ok().body(escola);
 	}
 
 	@PostMapping
-	@ResponseStatus(value = HttpStatus.CREATED)
-	public Escola persistir(@Valid @RequestBody Escola escola) {
-		return servico.salvar(escola);
+	public ResponseEntity<Escola> persistir(@Valid @RequestBody Escola escolaDto) {
+		Escola escola = servico.salvar(escolaDto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(escola.getId()).toUri();
+		return ResponseEntity.created(uri).body(escola);
 	}
-	
+
 	@DeleteMapping(value = "/{id}")
-	public void deletarPorId(@PathVariable Long id) {
+	public ResponseEntity<Void> deletarPorId(@PathVariable Long id) {
 		servico.deletar(id);
+		return ResponseEntity.noContent().build();
 	}
 }
