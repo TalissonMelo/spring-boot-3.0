@@ -33,7 +33,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/escolas/9",
+							"raw": "http://localhost:8080/escolas/5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -41,7 +41,7 @@
 							"port": "8080",
 							"path": [
 								"escolas",
-								"9"
+								"5"
 							]
 						}
 					},
@@ -70,6 +70,35 @@
 							"port": "8080",
 							"path": [
 								"escolas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Escola editar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"One For All: Full Cowl\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/escolas/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"escolas",
+								"5"
 							]
 						}
 					},
