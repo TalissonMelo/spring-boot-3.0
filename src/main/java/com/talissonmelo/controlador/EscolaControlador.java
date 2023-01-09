@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.talissonmelo.documentacao.EscolaControladorDocumentacao;
 import com.talissonmelo.modelo.Escola;
 import com.talissonmelo.servico.EscolaServico;
 
@@ -22,7 +23,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/escolas")
-public class EscolaControlador {
+public class EscolaControlador implements EscolaControladorDocumentacao {
 
 	@Autowired
 	private EscolaServico servico;
