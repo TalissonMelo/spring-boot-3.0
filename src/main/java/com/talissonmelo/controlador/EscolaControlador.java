@@ -3,6 +3,8 @@ package com.talissonmelo.controlador;
 import java.net.URI;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,24 +26,29 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping(value = "/escolas")
 public class EscolaControlador implements EscolaControladorDocumentacao {
+	
+	private static final Logger log = LoggerFactory.getLogger(EscolaControlador.class);
 
 	@Autowired
 	private EscolaServico servico;
 
 	@GetMapping
 	public ResponseEntity<List<Escola>> listar() {
+		log.info("Listando escolas");
 		List<Escola> escolas = servico.listar();
 		return ResponseEntity.ok().body(escolas);
 	}
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Escola> listarPorId(@PathVariable Long id) {
+		log.info("Listando escola por Id: {}", id);
 		Escola escola = servico.listarPorId(id);
 		return ResponseEntity.ok().body(escola);
 	}
 
 	@PostMapping
 	public ResponseEntity<Escola> persistir(@Valid @RequestBody Escola escolaDto) {
+		log.info("Cadastrando escola.");
 		Escola escola = servico.salvar(escolaDto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(escola.getId()).toUri();
 		return ResponseEntity.created(uri).body(escola);
@@ -49,12 +56,14 @@ public class EscolaControlador implements EscolaControladorDocumentacao {
 
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deletarPorId(@PathVariable Long id) {
+		log.warn("Deletando escola por Id: {}.", id);
 		servico.deletar(id);
 		return ResponseEntity.noContent().build();
 	}
 
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Escola> atualizarEscola(@PathVariable Long id, @Valid @RequestBody Escola escolaDto) {
+		log.warn("Atualizando escola por Id: {}.", id);
 		Escola escola = servico.atualizar(id, escolaDto);
 		return ResponseEntity.ok().body(escola);
 	}
