@@ -132,6 +132,32 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Escola listar nomes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/escolas/nomes?nome=Pro",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"escolas",
+								"nomes"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "Pro"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

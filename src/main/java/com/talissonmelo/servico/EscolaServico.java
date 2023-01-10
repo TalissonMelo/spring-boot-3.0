@@ -8,6 +8,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
+
 import com.talissonmelo.modelo.Escola;
 import com.talissonmelo.modelo.exception.ConflitoEmDelecao;
 import com.talissonmelo.modelo.exception.EntidadeNaoEncontrada;
@@ -29,8 +33,14 @@ public class EscolaServico {
 		return repositorio.listarEscolas();
 	}
 
+	public List<Escola> listar(Escola escola) {
+		Example<Escola> example = Example.of(escola, ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING));
+		return repositorio.findAll(example);
+	}
+
 	public Escola listarPorId(Long id) {
-		return repositorio.buscarPorId(id).orElseThrow(() -> new EntidadeNaoEncontrada(Escola.class.getSimpleName().toString(), id));
+		return repositorio.buscarPorId(id)
+				.orElseThrow(() -> new EntidadeNaoEncontrada(Escola.class.getSimpleName().toString(), id));
 	}
 
 	public void deletar(Long id) {

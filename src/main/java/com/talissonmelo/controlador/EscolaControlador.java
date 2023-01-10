@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -26,11 +27,20 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping(value = "/escolas")
 public class EscolaControlador implements EscolaControladorDocumentacao {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(EscolaControlador.class);
 
 	@Autowired
 	private EscolaServico servico;
+
+	@GetMapping(value = "/nomes")
+	public ResponseEntity<List<Escola>> findAll(@RequestParam(value = "nome", required = false) String nome) {
+		log.info("Listando escolas nomes");
+		Escola escola = new Escola();
+		escola.setNome(nome);
+		List<Escola> escolas = servico.listar(escola);
+		return ResponseEntity.ok().body(escolas);
+	}
 
 	@GetMapping
 	public ResponseEntity<List<Escola>> listar() {
