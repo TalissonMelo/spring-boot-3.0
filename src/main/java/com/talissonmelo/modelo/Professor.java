@@ -84,4 +84,12 @@ public class Professor {
 	public void setNomeHeroi(String nomeHeroi) {
 		this.nomeHeroi = nomeHeroi;
 	}
+
+	public Escola getEscola() {
+		return escola;
+	}
+
+	public void setEscola(Escola escola) {
+		this.escola = escola;
+	}
 }

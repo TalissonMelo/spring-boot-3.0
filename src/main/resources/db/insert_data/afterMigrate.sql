@@ -16,4 +16,6 @@ insert into escola (nome) values ("Pro Hero");
 
 insert into professor (nome, numero, individualidade, nome_heroi, id_escola) values ("Toshinori Yagi", 1 ,"Individualidade One For All", "All Might", 1);
 insert into professor (nome, numero, individualidade, nome_heroi, id_escola) values ("Shota Aizawa", 2, "Anula a individualidade de qualquer pessoa ao olhar para ela", "Eraser Head", 1);
+insert into professor (nome, numero, individualidade, nome_heroi, id_escola) values ("All For One", 1 ,"Individualidade All For One", "All For One", 5);
+
 
