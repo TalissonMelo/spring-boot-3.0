@@ -160,6 +160,48 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Professor",
+			"item": [
+				{
+					"name": "listar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/professores?nome=&numero=&nomeHeroi&idEscola=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"professores"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": ""
+								},
+								{
+									"key": "numero",
+									"value": ""
+								},
+								{
+									"key": "nomeHeroi",
+									"value": null
+								},
+								{
+									"key": "idEscola",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
