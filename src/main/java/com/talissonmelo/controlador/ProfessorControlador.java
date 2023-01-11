@@ -1,10 +1,11 @@
 package com.talissonmelo.controlador;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,12 +26,13 @@ public class ProfessorControlador implements ProfessorControladorDocumentacao {
 	private ProfessorServico servico;
 
 	@GetMapping
-	public ResponseEntity<List<Professor>> listar(
+	public ResponseEntity<Page<Professor>> listar(
+			@PageableDefault(size = 3) Pageable pageable,
 			@RequestParam(value = "nome", required = false) String nome,
 			@RequestParam(value = "numero", required = false) Integer numero,
 			@RequestParam(value = "nomeHeroi", required = false) String nomeHeroi,
 			@RequestParam(value = "idEscola", required = false) Long idEscola) {
 		log.info("Listando professores");
-		return ResponseEntity.ok().body(servico.listar(nome, numero, nomeHeroi, idEscola));
+		return ResponseEntity.ok().body(servico.listar(pageable, nome, numero, nomeHeroi, idEscola));
 	}
 }

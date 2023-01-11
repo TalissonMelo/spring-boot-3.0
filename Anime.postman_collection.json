@@ -170,7 +170,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/professores?nome=&numero=&nomeHeroi&idEscola=",
+							"raw": "http://localhost:8080/professores?nome=&numero=&nomeHeroi&idEscola=&size=3&page=0&sort=nome",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -195,6 +195,18 @@
 								{
 									"key": "idEscola",
 									"value": ""
+								},
+								{
+									"key": "size",
+									"value": "3"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "sort",
+									"value": "nome"
 								}
 							]
 						}

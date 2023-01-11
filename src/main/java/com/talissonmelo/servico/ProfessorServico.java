@@ -1,11 +1,11 @@
 package com.talissonmelo.servico;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.talissonmelo.modelo.Escola;
@@ -21,7 +21,7 @@ public class ProfessorServico {
 	@Autowired
 	private EscolaServico escolaServico;
 
-	public List<Professor> listar(String nome, Integer numero, String nomeHeroi, Long idEscola) {
+	public Page<Professor> listar(Pageable pageable, String nome, Integer numero, String nomeHeroi, Long idEscola) {
 		Professor professor = new Professor();
 		professor.setNome(nome);
 		professor.setNumero(numero);
@@ -31,7 +31,7 @@ public class ProfessorServico {
 			professor.setEscola(escola);
 		}
 		Example<Professor> example = Example.of(professor,ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING));
-		return repositorio.findAll(example);
+		return repositorio.findAll(example, pageable);
 	}
 
 }
