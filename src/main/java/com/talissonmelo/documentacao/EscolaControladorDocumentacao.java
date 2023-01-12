@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 import com.talissonmelo.modelo.Escola;
+import com.talissonmelo.modelo.dto.EscolaDto;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,11 +20,14 @@ public interface EscolaControladorDocumentacao {
 	ResponseEntity<Escola> listarPorId(Long id);
 
 	@Operation(summary = "Cadastra uma escola", description = "Cadastro de uma escola e obrigatório o preenchimento do nome!.")
-	ResponseEntity<Escola> persistir(Escola escolaDto);
+	ResponseEntity<Escola> persistir(EscolaDto escolaDto);
 
 	@Operation(summary = "Atualiza uma escola por Id")
 	ResponseEntity<Void> deletarPorId(Long id);
 
 	@Operation(summary = "Deleta uma cidade por Id")
-	ResponseEntity<Escola> atualizarEscola(Long id, Escola escolaDto);
+	ResponseEntity<Escola> atualizarEscola(Long id, EscolaDto escolaDto);
+
+	@Operation(summary = "Lista as escolas por nome")
+	ResponseEntity<List<Escola>> findAll(String nome);
 }

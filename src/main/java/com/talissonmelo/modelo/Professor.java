@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 
 @Table(name = "professor")
 @Entity
@@ -16,16 +15,9 @@ public class Professor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	private Integer numero;
-	
-	@NotBlank(message = "Nome e obrigatório!.")
 	private String nome;
-	
-	@NotBlank(message = "Individualidade e obrigatório!.")
 	private String individualidade;
-	
-	@NotBlank(message = "Nome do Herói e obrigatório!.")
 	private String nomeHeroi;
 	
 	@ManyToOne

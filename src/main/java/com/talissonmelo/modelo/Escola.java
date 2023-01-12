@@ -14,7 +14,7 @@ public class Escola {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotBlank(message = "Nome da escola e obrigatório!.")
 	private String nome;
 
@@ -23,6 +23,10 @@ public class Escola {
 
 	public Escola(Long id, String nome) {
 		this.id = id;
+		this.nome = nome;
+	}
+
+	public Escola(String nome) {
 		this.nome = nome;
 	}
 

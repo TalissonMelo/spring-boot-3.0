@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.talissonmelo.documentacao.ProfessorControladorDocumentacao;
 import com.talissonmelo.modelo.Professor;
+import com.talissonmelo.modelo.dto.ProfessorDto;
 import com.talissonmelo.servico.ProfessorServico;
 
 import jakarta.validation.Valid;
@@ -44,7 +45,7 @@ public class ProfessorControlador implements ProfessorControladorDocumentacao {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Professor> persistir(@Valid @RequestBody Professor professorDto) {
+	public ResponseEntity<Professor> persistir(@Valid @RequestBody ProfessorDto professorDto) {
 		log.info("Cadastrando professor.");
 		Professor professor = servico.salvar(professorDto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(professor.getId()).toUri();
