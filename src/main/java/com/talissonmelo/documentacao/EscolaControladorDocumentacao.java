@@ -8,6 +8,8 @@ import com.talissonmelo.modelo.Escola;
 import com.talissonmelo.modelo.dto.EscolaDto;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "Escolas", description = "Gerenciamento de escolas!.")
@@ -17,17 +19,23 @@ public interface EscolaControladorDocumentacao {
 	ResponseEntity<List<Escola>> listar();
 
 	@Operation(summary = "Busca uma escola por Id")
-	ResponseEntity<Escola> listarPorId(Long id);
+	ResponseEntity<Escola> listarPorId(
+			@Parameter(description = "ID de uma escola", example = "1", required = true) Long id);
 
 	@Operation(summary = "Cadastra uma escola", description = "Cadastro de uma escola e obrigatório o preenchimento do nome!.")
-	ResponseEntity<Escola> persistir(EscolaDto escolaDto);
+	ResponseEntity<Escola> persistir(
+			@RequestBody(description = "Representação de uma escola", required = true) EscolaDto escolaDto);
 
 	@Operation(summary = "Atualiza uma escola por Id")
-	ResponseEntity<Void> deletarPorId(Long id);
+	ResponseEntity<Void> deletarPorId(
+			@Parameter(description = "ID de uma escola", example = "1", required = true) Long id);
 
 	@Operation(summary = "Deleta uma cidade por Id")
-	ResponseEntity<Escola> atualizarEscola(Long id, EscolaDto escolaDto);
+	ResponseEntity<Escola> atualizarEscola(
+			@Parameter(description = "ID de uma escola", example = "1", required = true) Long id, 
+			@RequestBody(description = "Representação de uma escola para atualização de dados.", required = true) EscolaDto escolaDto);
 
 	@Operation(summary = "Lista as escolas por nome")
-	ResponseEntity<List<Escola>> findAll(String nome);
+	ResponseEntity<List<Escola>> findAll(
+			@Parameter(description = "Descrição do nome da escola parcial ou completo.", example = "Pro") String nome);
 }
