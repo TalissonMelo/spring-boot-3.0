@@ -8,6 +8,7 @@ import com.talissonmelo.modelo.Professor;
 import com.talissonmelo.modelo.dto.ProfessorDto;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "Professor", description = "Gerenciamento de professores!.")
@@ -17,6 +18,7 @@ public interface ProfessorControladorDocumentacao {
 	ResponseEntity<Page<Professor>> listar(Pageable pageable, String nome, Integer idade, String nomeHeroi, Long idEscola);
 	
 	@Operation(summary = "Cadastra um professor")
-	ResponseEntity<Professor> persistir(ProfessorDto professorDto);
+	ResponseEntity<Professor> persistir(
+			@RequestBody(description = "Representação de um professor", required = true) ProfessorDto professorDto);
 
 }
