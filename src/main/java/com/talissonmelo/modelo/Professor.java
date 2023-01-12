@@ -8,7 +8,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Table(name = "professor")
 @Entity
@@ -18,7 +17,6 @@ public class Professor {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotNull(message = "Número e obrigatório!.")
 	private Integer numero;
 	
 	@NotBlank(message = "Nome e obrigatório!.")

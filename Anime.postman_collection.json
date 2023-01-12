@@ -212,6 +212,34 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Salvar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Izuku\",\r\n    \"individualidade\": \"Individualidade All For One\",\r\n    \"nomeHeroi\": \"Deku\",\r\n    \"escola\": {\r\n        \"id\": 1,\r\n        \"nome\": \"Escola U.A.\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/professores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"professores"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
