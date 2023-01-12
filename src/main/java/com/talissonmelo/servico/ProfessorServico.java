@@ -33,5 +33,11 @@ public class ProfessorServico {
 		Example<Professor> example = Example.of(professor,ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING));
 		return repositorio.findAll(example, pageable);
 	}
+	
+	public Professor salvar(Professor professor) {
+		Integer numero = repositorio.numeroMaximoProfessor(professor.getEscola().getId());
+		professor.setNumero(numero + 1);
+		return repositorio.save(professor);
+	}
 
 }
