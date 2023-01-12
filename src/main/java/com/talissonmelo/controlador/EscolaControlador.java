@@ -20,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.talissonmelo.documentacao.EscolaControladorDocumentacao;
 import com.talissonmelo.modelo.Escola;
+import com.talissonmelo.modelo.dto.EscolaDto;
 import com.talissonmelo.servico.EscolaServico;
 
 import jakarta.validation.Valid;
@@ -57,7 +58,7 @@ public class EscolaControlador implements EscolaControladorDocumentacao {
 	}
 
 	@PostMapping
-	public ResponseEntity<Escola> persistir(@Valid @RequestBody Escola escolaDto) {
+	public ResponseEntity<Escola> persistir(@Valid @RequestBody EscolaDto escolaDto) {
 		log.info("Cadastrando escola.");
 		Escola escola = servico.salvar(escolaDto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(escola.getId()).toUri();
@@ -72,7 +73,7 @@ public class EscolaControlador implements EscolaControladorDocumentacao {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Escola> atualizarEscola(@PathVariable Long id, @Valid @RequestBody Escola escolaDto) {
+	public ResponseEntity<Escola> atualizarEscola(@PathVariable Long id, @Valid @RequestBody EscolaDto escolaDto) {
 		log.warn("Atualizando escola por Id: {}.", id);
 		Escola escola = servico.atualizar(id, escolaDto);
 		return ResponseEntity.ok().body(escola);

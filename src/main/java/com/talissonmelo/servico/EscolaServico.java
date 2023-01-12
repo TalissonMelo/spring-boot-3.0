@@ -13,6 +13,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 
 import com.talissonmelo.modelo.Escola;
+import com.talissonmelo.modelo.dto.EscolaDto;
 import com.talissonmelo.modelo.exception.ConflitoEmDelecao;
 import com.talissonmelo.modelo.exception.EntidadeNaoEncontrada;
 import com.talissonmelo.repositorio.EscolaRepositorio;
@@ -25,7 +26,8 @@ public class EscolaServico {
 	@Autowired
 	private EscolaRepositorio repositorio;
 
-	public Escola salvar(Escola escola) {
+	public Escola salvar(EscolaDto escolaDto) {
+		Escola escola = new Escola(escolaDto.getNome());
 		return repositorio.save(escola);
 	}
 
@@ -53,9 +55,9 @@ public class EscolaServico {
 		}
 	}
 
-	public Escola atualizar(Long id, @Valid Escola escolaDto) {
+	public Escola atualizar(Long id, @Valid EscolaDto escolaDto) {
 		Escola escola = this.listarPorId(id);
 		BeanUtils.copyProperties(escolaDto, escola, "id");
-		return this.salvar(escola);
+		return repositorio.save(escola);
 	}
 }
