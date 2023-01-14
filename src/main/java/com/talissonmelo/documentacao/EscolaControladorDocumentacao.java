@@ -36,6 +36,6 @@ public interface EscolaControladorDocumentacao {
 			@RequestBody(description = "Representação de uma escola para atualização de dados.", required = true) EscolaDto escolaDto);
 
 	@Operation(summary = "Lista as escolas por nome")
-	ResponseEntity<List<EscolaResposta>> listarNome(
+	ResponseEntity<List<EscolaResposta>> findAll(
 			@Parameter(description = "Descrição do nome da escola parcial ou completo.", example = "Pro") String nome);
 }

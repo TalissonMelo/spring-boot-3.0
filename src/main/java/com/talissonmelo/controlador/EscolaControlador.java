@@ -1,12 +1,12 @@
 package com.talissonmelo.controlador;
 
 import java.net.URI;
+import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,11 +38,12 @@ public class EscolaControlador implements EscolaControladorDocumentacao {
 	private EscolaServico servico;
 
 	@GetMapping(value = "/nomes")
-	public ResponseEntity<List<EscolaResposta>> listarNome(@RequestParam(value = "nome", required = false) String nome) {
+	public ResponseEntity<List<EscolaResposta>> findAll(@RequestParam(value = "nome", required = false) String nome) {
 		log.info("Listando escolas nomes");
 		Escola escola = new Escola();
 		escola.setNome(nome);
 		List<EscolaResposta> respostas = servico.listar(escola);
+		servico.addLink(respostas);
 		return ResponseEntity.ok().body(respostas);
 	}
 
@@ -50,6 +51,7 @@ public class EscolaControlador implements EscolaControladorDocumentacao {
 	public ResponseEntity<List<EscolaResposta>> listar() {
 		log.info("Listando escolas");
 		List<EscolaResposta> respostas = servico.listar();
+		servico.addLink(respostas);
 		return ResponseEntity.ok().body(respostas);
 	}
 
@@ -57,8 +59,7 @@ public class EscolaControlador implements EscolaControladorDocumentacao {
 	public ResponseEntity<EscolaResposta> listarPorId(@PathVariable Long id) {
 		log.info("Listando escola por Id: {}", id);
 		EscolaResposta resposta = servico.listarPorId(id);
-		resposta.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EscolaControlador.class).listarPorId(resposta.getId())).withSelfRel());
-		resposta.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EscolaControlador.class).listar()).withRel("cidades"));
+		servico.addLink(Arrays.asList(resposta));
 		return ResponseEntity.ok().body(resposta);
 	}
 
