@@ -1,19 +1,20 @@
 package com.talissonmelo.servico;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
-
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
+import org.springframework.stereotype.Service;
 
 import com.talissonmelo.modelo.Escola;
 import com.talissonmelo.modelo.dto.EscolaDto;
+import com.talissonmelo.modelo.dto.EscolaResposta;
 import com.talissonmelo.modelo.exception.ConflitoEmDelecao;
 import com.talissonmelo.modelo.exception.EntidadeNaoEncontrada;
 import com.talissonmelo.repositorio.EscolaRepositorio;
@@ -36,7 +37,8 @@ public class EscolaServico {
 	}
 
 	public List<Escola> listar(Escola escola) {
-		Example<Escola> example = Example.of(escola, ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING));
+		Example<Escola> example = Example.of(escola,
+				ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING));
 		return repositorio.findAll(example);
 	}
 
@@ -59,5 +61,13 @@ public class EscolaServico {
 		Escola escola = this.listarPorId(id);
 		BeanUtils.copyProperties(escolaDto, escola, "id");
 		return repositorio.save(escola);
+	}
+
+	public List<EscolaResposta> retornarEscolaResposta(List<Escola> escolas) {
+		return escolas.stream().map(escola -> EscolaResposta.criar(escola)).collect(Collectors.toList());
+	}
+	
+	public EscolaResposta retornaEscolaResposta(Escola escola) {
+		return new EscolaResposta(escola.getId(), escola.getNome());
 	}
 }

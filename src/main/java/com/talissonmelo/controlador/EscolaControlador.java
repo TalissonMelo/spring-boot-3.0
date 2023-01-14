@@ -6,6 +6,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,12 +23,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.talissonmelo.documentacao.EscolaControladorDocumentacao;
 import com.talissonmelo.modelo.Escola;
 import com.talissonmelo.modelo.dto.EscolaDto;
+import com.talissonmelo.modelo.dto.EscolaResposta;
 import com.talissonmelo.servico.EscolaServico;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/escolas")
+@RequestMapping(value = "/escolas", produces =  MediaType.APPLICATION_JSON_VALUE)
 public class EscolaControlador implements EscolaControladorDocumentacao {
 
 	private static final Logger log = LoggerFactory.getLogger(EscolaControlador.class);
@@ -35,34 +38,40 @@ public class EscolaControlador implements EscolaControladorDocumentacao {
 	private EscolaServico servico;
 
 	@GetMapping(value = "/nomes")
-	public ResponseEntity<List<Escola>> findAll(@RequestParam(value = "nome", required = false) String nome) {
+	public ResponseEntity<List<EscolaResposta>> findAll(@RequestParam(value = "nome", required = false) String nome) {
 		log.info("Listando escolas nomes");
 		Escola escola = new Escola();
 		escola.setNome(nome);
 		List<Escola> escolas = servico.listar(escola);
-		return ResponseEntity.ok().body(escolas);
+		List<EscolaResposta> respostas = servico.retornarEscolaResposta(escolas);
+		return ResponseEntity.ok().body(respostas);
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Escola>> listar() {
+	public ResponseEntity<List<EscolaResposta>> listar() {
 		log.info("Listando escolas");
 		List<Escola> escolas = servico.listar();
-		return ResponseEntity.ok().body(escolas);
+		List<EscolaResposta> respostas = servico.retornarEscolaResposta(escolas);
+		return ResponseEntity.ok().body(respostas);
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Escola> listarPorId(@PathVariable Long id) {
+	public ResponseEntity<EscolaResposta> listarPorId(@PathVariable Long id) {
 		log.info("Listando escola por Id: {}", id);
 		Escola escola = servico.listarPorId(id);
-		return ResponseEntity.ok().body(escola);
+		EscolaResposta resposta = servico.retornaEscolaResposta(escola);
+		resposta.add(WebMvcLinkBuilder.linkTo(EscolaControlador.class).slash(resposta.getId()).withSelfRel());
+		resposta.add(WebMvcLinkBuilder.linkTo(EscolaControlador.class).withRel("escolas"));
+		return ResponseEntity.ok().body(resposta);
 	}
 
 	@PostMapping
-	public ResponseEntity<Escola> persistir(@Valid @RequestBody EscolaDto escolaDto) {
+	public ResponseEntity<EscolaResposta> persistir(@Valid @RequestBody EscolaDto escolaDto) {
 		log.info("Cadastrando escola.");
 		Escola escola = servico.salvar(escolaDto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(escola.getId()).toUri();
-		return ResponseEntity.created(uri).body(escola);
+		EscolaResposta resposta = servico.retornaEscolaResposta(escola);
+		return ResponseEntity.created(uri).body(resposta);
 	}
 
 	@DeleteMapping(value = "/{id}")
@@ -73,9 +82,10 @@ public class EscolaControlador implements EscolaControladorDocumentacao {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Escola> atualizarEscola(@PathVariable Long id, @Valid @RequestBody EscolaDto escolaDto) {
+	public ResponseEntity<EscolaResposta> atualizarEscola(@PathVariable Long id, @Valid @RequestBody EscolaDto escolaDto) {
 		log.warn("Atualizando escola por Id: {}.", id);
 		Escola escola = servico.atualizar(id, escolaDto);
-		return ResponseEntity.ok().body(escola);
+		EscolaResposta resposta = servico.retornaEscolaResposta(escola);
+		return ResponseEntity.ok().body(resposta);
 	}
 }

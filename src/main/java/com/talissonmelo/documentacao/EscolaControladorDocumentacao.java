@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
-import com.talissonmelo.modelo.Escola;
 import com.talissonmelo.modelo.dto.EscolaDto;
+import com.talissonmelo.modelo.dto.EscolaResposta;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -16,14 +16,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public interface EscolaControladorDocumentacao {
 
 	@Operation(summary = "Lista as escolas")
-	ResponseEntity<List<Escola>> listar();
+	ResponseEntity<List<EscolaResposta>> listar();
 
 	@Operation(summary = "Busca uma escola por Id")
-	ResponseEntity<Escola> listarPorId(
+	ResponseEntity<EscolaResposta> listarPorId(
 			@Parameter(description = "ID de uma escola", example = "1", required = true) Long id);
 
 	@Operation(summary = "Cadastra uma escola", description = "Cadastro de uma escola e obrigatório o preenchimento do nome!.")
-	ResponseEntity<Escola> persistir(
+	ResponseEntity<EscolaResposta> persistir(
 			@RequestBody(description = "Representação de uma escola", required = true) EscolaDto escolaDto);
 
 	@Operation(summary = "Atualiza uma escola por Id")
@@ -31,11 +31,11 @@ public interface EscolaControladorDocumentacao {
 			@Parameter(description = "ID de uma escola", example = "1", required = true) Long id);
 
 	@Operation(summary = "Deleta uma cidade por Id")
-	ResponseEntity<Escola> atualizarEscola(
+	ResponseEntity<EscolaResposta> atualizarEscola(
 			@Parameter(description = "ID de uma escola", example = "1", required = true) Long id, 
 			@RequestBody(description = "Representação de uma escola para atualização de dados.", required = true) EscolaDto escolaDto);
 
 	@Operation(summary = "Lista as escolas por nome")
-	ResponseEntity<List<Escola>> findAll(
+	ResponseEntity<List<EscolaResposta>> findAll(
 			@Parameter(description = "Descrição do nome da escola parcial ou completo.", example = "Pro") String nome);
 }
