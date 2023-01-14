@@ -10,8 +10,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 
+import com.talissonmelo.controlador.EscolaControlador;
 import com.talissonmelo.modelo.Escola;
 import com.talissonmelo.modelo.dto.EscolaDto;
 import com.talissonmelo.modelo.dto.EscolaResposta;
@@ -67,5 +69,12 @@ public class EscolaServico {
 	
 	public EscolaResposta retornaEscolaResposta(Escola escola) {
 		return new EscolaResposta(escola.getId(), escola.getNome());
+	}
+	
+	public void addLink(List<EscolaResposta> escolaRespostas) {
+		escolaRespostas.forEach(resposta -> {
+			resposta.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EscolaControlador.class).listarPorId(resposta.getId())).withSelfRel());
+			resposta.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EscolaControlador.class).listar()).withRel("cidades"));
+		});
 	}
 }
