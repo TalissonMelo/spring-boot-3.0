@@ -38,39 +38,35 @@ public class EscolaControlador implements EscolaControladorDocumentacao {
 	private EscolaServico servico;
 
 	@GetMapping(value = "/nomes")
-	public ResponseEntity<List<EscolaResposta>> findAll(@RequestParam(value = "nome", required = false) String nome) {
+	public ResponseEntity<List<EscolaResposta>> listarNome(@RequestParam(value = "nome", required = false) String nome) {
 		log.info("Listando escolas nomes");
 		Escola escola = new Escola();
 		escola.setNome(nome);
-		List<Escola> escolas = servico.listar(escola);
-		List<EscolaResposta> respostas = servico.retornarEscolaResposta(escolas);
+		List<EscolaResposta> respostas = servico.listar(escola);
 		return ResponseEntity.ok().body(respostas);
 	}
 
 	@GetMapping
 	public ResponseEntity<List<EscolaResposta>> listar() {
 		log.info("Listando escolas");
-		List<Escola> escolas = servico.listar();
-		List<EscolaResposta> respostas = servico.retornarEscolaResposta(escolas);
+		List<EscolaResposta> respostas = servico.listar();
 		return ResponseEntity.ok().body(respostas);
 	}
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<EscolaResposta> listarPorId(@PathVariable Long id) {
 		log.info("Listando escola por Id: {}", id);
-		Escola escola = servico.listarPorId(id);
-		EscolaResposta resposta = servico.retornaEscolaResposta(escola);
-		resposta.add(WebMvcLinkBuilder.linkTo(EscolaControlador.class).slash(resposta.getId()).withSelfRel());
-		resposta.add(WebMvcLinkBuilder.linkTo(EscolaControlador.class).withRel("escolas"));
+		EscolaResposta resposta = servico.listarPorId(id);
+		resposta.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EscolaControlador.class).listarPorId(resposta.getId())).withSelfRel());
+		resposta.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EscolaControlador.class).listar()).withRel("cidades"));
 		return ResponseEntity.ok().body(resposta);
 	}
 
 	@PostMapping
 	public ResponseEntity<EscolaResposta> persistir(@Valid @RequestBody EscolaDto escolaDto) {
 		log.info("Cadastrando escola.");
-		Escola escola = servico.salvar(escolaDto);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(escola.getId()).toUri();
-		EscolaResposta resposta = servico.retornaEscolaResposta(escola);
+		EscolaResposta resposta = servico.salvar(escolaDto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(resposta.getId()).toUri();
 		return ResponseEntity.created(uri).body(resposta);
 	}
 
@@ -84,8 +80,7 @@ public class EscolaControlador implements EscolaControladorDocumentacao {
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<EscolaResposta> atualizarEscola(@PathVariable Long id, @Valid @RequestBody EscolaDto escolaDto) {
 		log.warn("Atualizando escola por Id: {}.", id);
-		Escola escola = servico.atualizar(id, escolaDto);
-		EscolaResposta resposta = servico.retornaEscolaResposta(escola);
+		EscolaResposta resposta = servico.atualizar(id, escolaDto);
 		return ResponseEntity.ok().body(resposta);
 	}
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.talissonmelo.modelo.Escola;
 import com.talissonmelo.modelo.Professor;
+import com.talissonmelo.modelo.dto.EscolaResposta;
 import com.talissonmelo.modelo.dto.ProfessorDto;
 import com.talissonmelo.repositorio.ProfessorRepositorio;
 
@@ -29,7 +30,8 @@ public class ProfessorServico {
 		professor.setNumero(numero);
 		professor.setNomeHeroi(nomeHeroi);
 		if (idEscola != null) {
-			Escola escola = escolaServico.listarPorId(idEscola);
+			EscolaResposta escolaResposta = escolaServico.listarPorId(idEscola);
+			Escola escola = new Escola(escolaResposta.getId(), escolaResposta.getNome());
 			professor.setEscola(escola);
 		}
 		Example<Professor> example = Example.of(professor,ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING));
