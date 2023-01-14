@@ -6,6 +6,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +29,7 @@ import com.talissonmelo.servico.EscolaServico;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/escolas")
+@RequestMapping(value = "/escolas", produces =  MediaType.APPLICATION_JSON_VALUE)
 public class EscolaControlador implements EscolaControladorDocumentacao {
 
 	private static final Logger log = LoggerFactory.getLogger(EscolaControlador.class);
@@ -58,6 +60,8 @@ public class EscolaControlador implements EscolaControladorDocumentacao {
 		log.info("Listando escola por Id: {}", id);
 		Escola escola = servico.listarPorId(id);
 		EscolaResposta resposta = servico.retornaEscolaResposta(escola);
+		resposta.add(WebMvcLinkBuilder.linkTo(EscolaControlador.class).slash(resposta.getId()).withSelfRel());
+		resposta.add(WebMvcLinkBuilder.linkTo(EscolaControlador.class).withRel("escolas"));
 		return ResponseEntity.ok().body(resposta);
 	}
 

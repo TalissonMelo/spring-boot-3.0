@@ -1,8 +1,10 @@
 package com.talissonmelo.modelo.dto;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import com.talissonmelo.modelo.Escola;
 
-public class EscolaResposta {
+public class EscolaResposta extends RepresentationModel<EscolaResposta> {
 
 	private Long id;
 	private String nome;
@@ -14,8 +16,8 @@ public class EscolaResposta {
 		this.id = id;
 		this.nome = nome;
 	}
-	
-	public static  EscolaResposta criar(Escola escola) {
+
+	public static EscolaResposta criar(Escola escola) {
 		EscolaResposta escolaResposta = new EscolaResposta(escola.getId(), escola.getNome());
 		return escolaResposta;
 	}
