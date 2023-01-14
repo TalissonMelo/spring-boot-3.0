@@ -74,7 +74,7 @@ public class EscolaServico {
 	public void addLink(List<EscolaResposta> escolaRespostas) {
 		escolaRespostas.forEach(resposta -> {
 			resposta.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EscolaControlador.class).listarPorId(resposta.getId())).withSelfRel());
-			resposta.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EscolaControlador.class).listar()).withRel("cidades"));
+			resposta.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EscolaControlador.class).listar()).withRel("escolas"));
 		});
 	}
 }
