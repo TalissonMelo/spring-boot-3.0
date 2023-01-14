@@ -27,24 +27,22 @@ public class EscolaServico {
 	@Autowired
 	private EscolaRepositorio repositorio;
 
-	public Escola salvar(EscolaDto escolaDto) {
+	public EscolaResposta salvar(EscolaDto escolaDto) {
 		Escola escola = new Escola(escolaDto.getNome());
-		return repositorio.save(escola);
+		return this.retornaEscolaResposta(repositorio.save(escola));
 	}
 
-	public List<Escola> listar() {
-		return repositorio.listarEscolas();
+	public List<EscolaResposta> listar() {
+		return this.retornarEscolaResposta(repositorio.listarEscolas());
 	}
 
-	public List<Escola> listar(Escola escola) {
-		Example<Escola> example = Example.of(escola,
-				ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING));
-		return repositorio.findAll(example);
+	public List<EscolaResposta> listar(Escola escola) {
+		Example<Escola> example = Example.of(escola,ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING));
+		return this.retornarEscolaResposta(repositorio.findAll(example));
 	}
 
-	public Escola listarPorId(Long id) {
-		return repositorio.buscarPorId(id)
-				.orElseThrow(() -> new EntidadeNaoEncontrada(Escola.class.getSimpleName().toString(), id));
+	public EscolaResposta listarPorId(Long id) {
+		return this.retornaEscolaResposta(repositorio.buscarPorId(id).orElseThrow(() -> new EntidadeNaoEncontrada(Escola.class.getSimpleName().toString(), id)));
 	}
 
 	public void deletar(Long id) {
@@ -57,10 +55,10 @@ public class EscolaServico {
 		}
 	}
 
-	public Escola atualizar(Long id, @Valid EscolaDto escolaDto) {
-		Escola escola = this.listarPorId(id);
+	public EscolaResposta atualizar(Long id, @Valid EscolaDto escolaDto) {
+		Escola escola = repositorio.buscarPorId(id).orElseThrow(() -> new EntidadeNaoEncontrada(Escola.class.getSimpleName().toString(), id));
 		BeanUtils.copyProperties(escolaDto, escola, "id");
-		return repositorio.save(escola);
+		return this.retornaEscolaResposta(repositorio.save(escola));
 	}
 
 	public List<EscolaResposta> retornarEscolaResposta(List<Escola> escolas) {
