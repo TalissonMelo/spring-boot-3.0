@@ -58,7 +58,7 @@ public class EscolaControlador implements EscolaControladorDocumentacao {
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<EscolaResposta> listarPorId(@PathVariable Long id) {
 		log.info("Listando escola por Id: {}", id);
-		EscolaResposta resposta = servico.listarPorId(id);
+		EscolaResposta resposta = servico.retornaEscolaResposta(servico.listarPorId(id));
 		servico.addLink(Arrays.asList(resposta));
 		return ResponseEntity.ok().body(resposta);
 	}
