@@ -43,8 +43,8 @@ public class EscolaServico {
 		return this.retornarEscolaResposta(repositorio.findAll(example));
 	}
 
-	public EscolaResposta listarPorId(Long id) {
-		return this.retornaEscolaResposta(repositorio.buscarPorId(id).orElseThrow(() -> new EntidadeNaoEncontrada(Escola.class.getSimpleName().toString(), id)));
+	public Escola listarPorId(Long id) {
+		return  repositorio.buscarPorId(id).orElseThrow(() -> new EntidadeNaoEncontrada(Escola.class.getSimpleName().toString(), id));
 	}
 
 	public void deletar(Long id) {
