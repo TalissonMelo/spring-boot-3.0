@@ -1,3 +1,7 @@
+# Anime
+
+#### Aplicação Monolítica - Projeto para verificar atualizações do Spring Boot 3.0 e utilização do JAVA 17
+
 1º Gerar o build do projeto 
             
     ./mvnw clean package 
