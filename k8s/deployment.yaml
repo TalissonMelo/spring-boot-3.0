@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anime-b
+  labels:
+    app: anime-b
+spec:
+  selector:
+    matchLabels:
+      app: anime-b
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: "anime-b"
+    spec:
+      containers:
+        - name: anime-b-container
+          image: talisson/anime:latest
+          ports:
+            - containerPort: 808
+          envFrom:
+            - configMapRef:
+                name: anime-b-c
+          resources:
+            requests:
+              memory: "1.5Gi" 
+              cpu: "750m"
+      nodeSelector:
+        disktype: node-anime-b
+      imagePullSecrets:
+        - name: regcred
