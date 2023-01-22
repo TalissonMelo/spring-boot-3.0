@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.talissonmelo.modelo.Escola;
 import com.talissonmelo.modelo.Professor;
 import com.talissonmelo.modelo.dto.ProfessorDto;
+import com.talissonmelo.modelo.exception.EntidadeNaoEncontrada;
 import com.talissonmelo.repositorio.ProfessorRepositorio;
 
 @Service
@@ -42,6 +43,10 @@ public class ProfessorServico {
 		BeanUtils.copyProperties(professorDto, professor);
 		professor.setNumero(numero);
 		return repositorio.save(professor);
+	}
+	
+	public Professor listarPorId(Long idProfessor) {
+		return this.repositorio.findById(idProfessor).orElseThrow(() -> new EntidadeNaoEncontrada(Professor.class.getSimpleName(), idProfessor));
 	}
 
 }
