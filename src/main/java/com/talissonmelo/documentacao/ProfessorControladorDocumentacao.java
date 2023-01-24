@@ -25,5 +25,9 @@ public interface ProfessorControladorDocumentacao {
 	@Operation(summary = "Busca um professor por Id")
 	ResponseEntity<Professor> listarPorId(
 			@Parameter(description = "ID de um professor", example = "1", required = true) Long id);
+	
+	@Operation(summary = "Deletar um professor por Id")
+	ResponseEntity<Void> deletarPorId(
+			@Parameter(description = "ID do professor", example = "1", required = true) Long id);
 
 }

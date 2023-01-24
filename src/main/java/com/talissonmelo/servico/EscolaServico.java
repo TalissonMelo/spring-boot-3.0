@@ -53,7 +53,7 @@ public class EscolaServico {
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontrada(Escola.class.getSimpleName().toString(), id);
 		} catch (DataIntegrityViolationException e) {
-			throw new ConflitoEmDelecao("Pessoa não pode ser Deletada, possui persistencia em outra tabela.");
+			throw new ConflitoEmDelecao("Escola não pode ser Deletada, possui persistencia em outra tabela.");
 		}
 	}
 
