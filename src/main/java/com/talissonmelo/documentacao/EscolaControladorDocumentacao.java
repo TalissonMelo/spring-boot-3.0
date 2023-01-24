@@ -26,11 +26,11 @@ public interface EscolaControladorDocumentacao {
 	ResponseEntity<EscolaResposta> persistir(
 			@RequestBody(description = "Representação de uma escola", required = true) EscolaDto escolaDto);
 
-	@Operation(summary = "Atualiza uma escola por Id")
+	@Operation(summary = "Deleta uma escola por Id")
 	ResponseEntity<Void> deletarPorId(
 			@Parameter(description = "ID de uma escola", example = "1", required = true) Long id);
 
-	@Operation(summary = "Deleta uma cidade por Id")
+	@Operation(summary = "Atualiza uma escola por Id")
 	ResponseEntity<EscolaResposta> atualizarEscola(
 			@Parameter(description = "ID de uma escola", example = "1", required = true) Long id, 
 			@RequestBody(description = "Representação de uma escola para atualização de dados.", required = true) EscolaDto escolaDto);

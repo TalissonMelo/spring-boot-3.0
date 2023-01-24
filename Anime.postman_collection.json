@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8283f16f-f894-4388-863b-184ec0d66a02",
+		"_postman_id": "44ca0ec2-f779-408f-a5a0-2c6201b8380d",
 		"name": "Anime",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -236,6 +236,46 @@
 							"port": "8080",
 							"path": [
 								"professores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/professores/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"professores",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/professores/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"professores",
+								"1"
 							]
 						}
 					},

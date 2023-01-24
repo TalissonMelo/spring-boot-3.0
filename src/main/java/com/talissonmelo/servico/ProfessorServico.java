@@ -2,6 +2,8 @@ package com.talissonmelo.servico;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.talissonmelo.modelo.Escola;
 import com.talissonmelo.modelo.Professor;
 import com.talissonmelo.modelo.dto.ProfessorDto;
+import com.talissonmelo.modelo.exception.ConflitoEmDelecao;
 import com.talissonmelo.modelo.exception.EntidadeNaoEncontrada;
 import com.talissonmelo.repositorio.ProfessorRepositorio;
 
@@ -43,6 +46,16 @@ public class ProfessorServico {
 		BeanUtils.copyProperties(professorDto, professor);
 		professor.setNumero(numero);
 		return repositorio.save(professor);
+	}
+	
+	public void deletar(Long id) {
+		try {
+			repositorio.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new EntidadeNaoEncontrada(Escola.class.getSimpleName().toString(), id);
+		} catch (DataIntegrityViolationException e) {
+			throw new ConflitoEmDelecao("Professor não pode ser Deletada, possui persistencia em outra tabela.");
+		}
 	}
 	
 	public Professor listarPorId(Long idProfessor) {
