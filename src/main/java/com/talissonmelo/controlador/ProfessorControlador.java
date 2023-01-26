@@ -56,11 +56,13 @@ public class ProfessorControlador implements ProfessorControladorDocumentacao {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Professor> listarPorId(@PathVariable Long id) {
+		log.info("Listar professor por id.");
 		return ResponseEntity.ok().body(this.servico.listarPorId(id));
 	}
 
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deletarPorId(@PathVariable Long id) {
+		log.info("Deletar professor.");
 		servico.deletar(id);
 		return ResponseEntity.noContent().build();
 	}
