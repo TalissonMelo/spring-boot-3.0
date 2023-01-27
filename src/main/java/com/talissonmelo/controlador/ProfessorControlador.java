@@ -37,7 +37,7 @@ public class ProfessorControlador implements ProfessorControladorDocumentacao {
 
 	@GetMapping
 	public ResponseEntity<Page<Professor>> listar(
-			@PageableDefault(size = 3) Pageable pageable,
+			@PageableDefault(size = 2) Pageable pageable,
 			@RequestParam(value = "nome", required = false) String nome,
 			@RequestParam(value = "numero", required = false) Integer numero,
 			@RequestParam(value = "nomeHeroi", required = false) String nomeHeroi,
