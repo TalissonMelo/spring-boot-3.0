@@ -19,7 +19,7 @@ public interface ProfessorControladorDocumentacao {
 	ResponseEntity<Page<Professor>> listar(Pageable pageable, String nome, Integer idade, String nomeHeroi, Long idEscola);
 	
 	@Operation(summary = "Cadastra um professor")
-	ResponseEntity<Professor> persistir(
+	ResponseEntity<Professor> salvar(
 			@RequestBody(description = "Representação de um professor", required = true) ProfessorDto professorDto);
 	
 	@Operation(summary = "Busca um professor por Id")
@@ -29,5 +29,10 @@ public interface ProfessorControladorDocumentacao {
 	@Operation(summary = "Deletar um professor por Id")
 	ResponseEntity<Void> deletarPorId(
 			@Parameter(description = "ID do professor", example = "1", required = true) Long id);
+	
+	@Operation(summary = "Atualiza um professor por Id")
+	ResponseEntity<Professor> atualizar(
+			@Parameter(description = "ID de um professor", example = "1", required = true) Long id, 
+			@RequestBody(description = "Representação de um professor.", required = true) ProfessorDto professorDto);
 
 }

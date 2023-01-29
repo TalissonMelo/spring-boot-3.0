@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,8 +37,7 @@ public class ProfessorControlador implements ProfessorControladorDocumentacao {
 	private ProfessorServico servico;
 
 	@GetMapping
-	public ResponseEntity<Page<Professor>> listar(
-			@PageableDefault(size = 2) Pageable pageable,
+	public ResponseEntity<Page<Professor>> listar(@PageableDefault(size = 2) Pageable pageable,
 			@RequestParam(value = "nome", required = false) String nome,
 			@RequestParam(value = "numero", required = false) Integer numero,
 			@RequestParam(value = "nomeHeroi", required = false) String nomeHeroi,
@@ -45,12 +45,13 @@ public class ProfessorControlador implements ProfessorControladorDocumentacao {
 		log.info("Listando professores");
 		return ResponseEntity.ok().body(servico.listar(pageable, nome, numero, nomeHeroi, idEscola));
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<Professor> persistir(@Valid @RequestBody ProfessorDto professorDto) {
+	public ResponseEntity<Professor> salvar(@Valid @RequestBody ProfessorDto professorDto) {
 		log.info("Cadastrando professor.");
 		Professor professor = servico.salvar(professorDto);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(professor.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(professor.getId())
+				.toUri();
 		return ResponseEntity.created(uri).body(professor);
 	}
 
@@ -65,5 +66,12 @@ public class ProfessorControlador implements ProfessorControladorDocumentacao {
 		log.info("Deletar professor.");
 		servico.deletar(id);
 		return ResponseEntity.noContent().build();
+	}
+
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Professor> atualizar(@PathVariable Long id, @Valid @RequestBody ProfessorDto professorDto) {
+		log.info("Atualizar professor.");
+		Professor professor = servico.atualizar(id, professorDto);
+		return ResponseEntity.ok().body(professor);
 	}
 }
