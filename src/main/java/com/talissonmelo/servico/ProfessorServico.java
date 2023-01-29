@@ -18,6 +18,8 @@ import com.talissonmelo.modelo.exception.ConflitoEmDelecao;
 import com.talissonmelo.modelo.exception.EntidadeNaoEncontrada;
 import com.talissonmelo.repositorio.ProfessorRepositorio;
 
+import jakarta.validation.Valid;
+
 @Service
 public class ProfessorServico {
 
@@ -60,6 +62,12 @@ public class ProfessorServico {
 	
 	public Professor listarPorId(Long idProfessor) {
 		return this.repositorio.findById(idProfessor).orElseThrow(() -> new EntidadeNaoEncontrada(Professor.class.getSimpleName(), idProfessor));
+	}
+
+	public Professor atualizar(Long id, @Valid ProfessorDto professorDto) {
+		Professor professor = this.listarPorId(id);
+		BeanUtils.copyProperties(professorDto, professor, "id");
+		return this.repositorio.save(professor);
 	}
 
 }
