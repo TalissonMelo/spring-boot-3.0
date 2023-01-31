@@ -46,7 +46,7 @@ public class ProfessorServico {
 		Professor professor = new Professor();
 		Integer numero = repositorio.numeroMaximoProfessor(professorDto.getEscola().getId());
 		BeanUtils.copyProperties(professorDto, professor);
-		professor.setNumero(numero);
+		professor.setNumero(numero + 1);
 		return repositorio.save(professor);
 	}
 	
