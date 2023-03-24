@@ -1,31 +1,18 @@
 # Anime
 
-#### Aplicação Monolítica - Projeto para verificar atualizações do Spring Boot 3.0 e utilização do JAVA 17
+## Como replicar o projeto em meu ambiente de execução?
 
-1º Gerar o build do projeto 
-            
-    ./mvnw clean package 
+#### Instale o Docker 
 
-2º Criar o bando de dados 
+Digite <strong> docker-compose up </strong> para dar start nos serviços e ele mesmo vai fazer as configurações.
 
-    docker container run -d -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=yes --network NAME_NETWORK --name NAME_IMAGEM_MYSQL mysql:8.0
+Neste instante o projeto será construído e o servidor será inicializado na porta padrão 8080.
 
-3º Gerar a imagem Docker do projeto 
+Para realizar os testes na aplicação pode-se utilizar uma extensão do navegador (Chrome, firefox etc...). 
 
-    docker image build -t "NAME_IMAGE_DOCKER_CREATED" .
+A sugestão e utilizar o "Postman", "Insomnia" ou "Rester", importando a colection Anime.postman_collection.json
 
-4º Inicializar a Imagem Docker do projeto
+Pode se ainda visualizar a documentação do mesmo no link http://localhost:8080/swagger-ui/index.html
 
-    docker container run --rm -p 8080:8080 -e DB_HOST=NOME_CONTAINER_MYSQL --network NOME_NETWORK NOME_IMAGEM
 
---------------------------------------------------------------------
 
-5º Efetuando geração de imagem juntamento com MAVEN
-	
-	1º Gerar o build do projeto 
-  
-       ./mvnw clean package -Pdocker
-
-	2º Inicializar a Imagem Docker do projeto
-
-        docker container run --rm -p 8080:8080 -e DB_HOST=NOME_CONTAINER_MYSQL --network NOME_NETWORK NOME_IMAGEM

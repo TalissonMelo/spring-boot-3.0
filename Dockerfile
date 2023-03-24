@@ -1,11 +1,10 @@
-FROM openjdk:17-jdk-slim
+FROM maven:3.8.5-openjdk-17 as build
+WORKDIR /build
+COPY . .
+RUN mvn clean package -DskipTests
 
+
+FROM openjdk:17
 WORKDIR /app
-
-ARG JAR_FILE
-
-COPY target/${JAR_FILE} /app/api.jar
-
-EXPOSE 8080
-
-CMD ["java", "-jar", "api.jar"]
+COPY --from=build ./build/target/*.jar ./anime-.jar
+ENTRYPOINT java -jar anime-.jar
